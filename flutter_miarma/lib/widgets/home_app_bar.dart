@@ -8,6 +8,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 35),
       child: Container(
+        alignment: Alignment.centerLeft,
         decoration: const BoxDecoration(
             border: Border(
                 bottom: BorderSide(

@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Padding(padding: EdgeInsets.only(top: 75)),
                 const Center(
-                    child: Text('Instagram',
+                    child: Text('Miarmapp',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 50,

@@ -33,17 +33,32 @@ class _ProfileScreenState extends State<ProfileScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        MaterialButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/");
+                          },
+                          child: const Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: Text(
+                                  '<',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              )),
+                        ),
                         const Expanded(
-                            flex: 1,
+                            flex: 5,
                             child: Padding(
                               padding: EdgeInsets.all(12.0),
                               child: Text(
                                 'Nombre de usuario',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                             )),
                         Expanded(
-                            flex: 1,
+                            flex: 3,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: const [
@@ -72,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(color: Colors.red, width: 2)),
                         child: FloatingActionButton(
-                          elevation: 50,
+                          elevation: 100,
                           backgroundColor: Colors.transparent,
                           onPressed: () {
                             Navigator.pushNamed(context, "/profile");
@@ -201,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: TabBar(
                 indicatorColor: Colors.red,
                 controller: tabController,
-                tabs: [
+                tabs: const [
                   Tab(
                       icon: Icon(
                     Icons.directions_car,
@@ -215,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 500,
               child: TabBarView(
                 controller: tabController,

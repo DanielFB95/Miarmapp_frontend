@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           FloatingActionButton(
-            elevation: 50,
+            elevation: 100,
             backgroundColor: Colors.transparent,
             onPressed: () {
               Navigator.pushNamed(context, "/profile");

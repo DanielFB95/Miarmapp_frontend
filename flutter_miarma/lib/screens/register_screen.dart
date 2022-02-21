@@ -21,12 +21,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(padding: EdgeInsets.only(top: 75)),
-                const Center(
-                    child: Text('Miarmapp',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 50,
-                            color: Colors.black54))),
+                Center(
+                  child: SizedBox(
+                    width: 125,
+                    child: Image.asset(
+                      'assets/images/logo_miarmapp.png',
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 const Padding(padding: EdgeInsets.only(top: 25)),
                 const Center(
                     child: Text('Creación de una',

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_miarma/blocs/post_bloc/post_bloc.dart';
+import 'package:flutter_miarma/widgets/error_page.dart';
 import 'package:flutter_miarma/widgets/home_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +14,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (context, state) {
+        if (state is PostInitial) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is PostFetchError) {
+          return ErrorPage(
+            message: state.message,
+            retry: () {
+              context.watch<PostBloc>().add(const FetchPost());
+            },
+          );
+        } else if (state is PostFetched) {
+          return _homeScreen(context);
+        } else {
+          return const Text('Not support');
+        }
+      },
+    );
+  }
+
+  Widget _homeScreen(BuildContext context) {
     return Scaffold(
         appBar: const HomeAppBar(),
         body: SingleChildScrollView(

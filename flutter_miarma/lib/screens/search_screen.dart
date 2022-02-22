@@ -41,7 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 700,
               child: GridView.count(
                 crossAxisCount: 3,

@@ -1,1 +1,3 @@
 class PostResponse {}
+
+class Post {}

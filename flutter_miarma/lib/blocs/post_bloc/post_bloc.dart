@@ -13,10 +13,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final PostRepository postRepository;
 
   PostBloc(this.postRepository) : super(PostInitial()) {
-    on<PostEvent>(_postFetched);
+    on<FetchPost>(_postFetched);
   }
 
-  Future<void> _postFetched(PostEvent event, Emitter<PostState> emit) async {
+  Future<void> _postFetched(FetchPost event, Emitter<PostState> emit) async {
     try {
       final posts = await postRepository.fetchPeople();
       emit(PostFetched(posts));

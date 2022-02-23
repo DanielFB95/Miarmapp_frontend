@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_miarma/blocs/login_bloc/login_bloc.dart';
+import 'package:flutter_miarma/models/login_dto.dart';
+import 'package:flutter_miarma/repositories/auth_repository/auth_repository.dart';
+import 'package:flutter_miarma/repositories/auth_repository/auth_repository_impl.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -9,9 +14,56 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  late AuthRepository authRepository;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    authRepository = AuthRepositoryImpl();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) {
+        return LoginBloc(authRepository);
+      },
+      child: _createBody(context),
+    );
+  }
+
+  _createBody(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listenWhen: (context, state) {
+            return state is LoginSuccesState || state is LoginErrorState;
+          },
+          listener: (context, state) {
+            if (state is LoginSuccesState) {
+              Navigator.pushNamed(context, "/");
+            }
+          },
+          buildWhen: (context, state) {
+            return state is LoginInitialState || state is LoginLoadingState;
+          },
+          builder: (context, state) {
+            if (state is LoginInitialState) {
+              return form(context);
+            } else if (state is LoginLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return form(context);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget form(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color.fromARGB(245, 245, 245, 245),
         body: Form(
@@ -41,8 +93,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: TextFormField(
+                            controller: emailController,
                             decoration: const InputDecoration(
-                                hintText: 'Nombre de usuario'),
+                                suffixIcon: Icon(Icons.email),
+                                suffixIconColor: Colors.white,
+                                hintText: 'Email'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor introduce algún texto';
@@ -62,9 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: TextFormField(
+                          controller: passwordController,
                           obscureText: true,
-                          decoration:
-                              const InputDecoration(hintText: 'Contraseña'),
+                          decoration: const InputDecoration(
+                              suffixIcon: Icon(Icons.vpn_key),
+                              suffixIconColor: Colors.white,
+                              hintText: 'Contraseña'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Por favor introduce algún texto';
@@ -95,20 +153,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(top: 36.0),
                   child: Center(
                     child: SizedBox(
-                      width: 300,
-                      child: ElevatedButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.redAccent),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Procesando datos')),
-                            );
-                          }
-                        },
-                        child: const Text('Sign In'),
-                      ),
-                    ),
+                        width: 300,
+                        child: GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              final loginDto = LoginDto(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              BlocProvider.of<LoginBloc>(context)
+                                  .add(DoLoginEvent(loginDto));
+                              Navigator.pushNamed(context, "/");
+                            }
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(
+                                  top: 30, left: 30, right: 30),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.black, width: 2),
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Text(
+                                'Sign In'.toUpperCase(),
+                                style: const TextStyle(color: Colors.black),
+                                textAlign: TextAlign.center,
+                              )),
+                        )),
                   ),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 15)),

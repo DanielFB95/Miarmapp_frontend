@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_miarma/blocs/post_bloc/post_bloc.dart';
+import 'package:flutter_miarma/repositories/post_repository/post_repository.dart';
+import 'package:flutter_miarma/repositories/post_repository/post_repository_impl.dart';
 import 'package:flutter_miarma/widgets/error_page.dart';
 import 'package:flutter_miarma/widgets/home_app_bar.dart';
 
@@ -12,8 +14,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late PostRepository postRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    postRepository = PostRepositoryImpl();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) {
+        return PostBloc(postRepository)..add(FetchPost());
+      },
+      child: Scaffold(
+        body: _createHomeScreen(context),
+      ),
+    );
+  }
+
+  Widget _createHomeScreen(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (context, state) {
         if (state is PostInitial) {
@@ -34,7 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _homeScreen(BuildContext context) {
+  Widget _homeScreen(
+    BuildContext context,
+    /*List<Person> people*/
+  ) {
     return Scaffold(
         appBar: const HomeAppBar(),
         body: SingleChildScrollView(
@@ -104,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          const Text('Nombre de usuario',
+          const Text('dfghdf',
               style: TextStyle(
                   fontSize: 10,
                   color: Colors.black54,

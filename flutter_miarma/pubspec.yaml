@@ -30,12 +30,12 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: 2.2.0
-  http: ^0.13.4
   intl: ^0.17.0
   timeago: ^3.2.2
-  rxdart: ^0.18.0
+  rxdart: ^0.26.0
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
+  http: ^0.13.0
   cached_network_image: ^3.2.0
 
 

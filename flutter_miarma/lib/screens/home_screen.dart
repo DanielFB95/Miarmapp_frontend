@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: 10,
+                    itemCount: posts.length,
                     itemBuilder: (context, index) {
                       return _post(posts.elementAt(index));
                     }),
@@ -112,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           FloatingActionButton(
+            heroTag: null,
             elevation: 100,
             backgroundColor: Colors.transparent,
             onPressed: () {
@@ -158,6 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(color: Colors.red, width: 3)),
                   child: FloatingActionButton(
+                    heroTag: null,
                     backgroundColor: Colors.transparent,
                     elevation: 15,
                     onPressed: () {

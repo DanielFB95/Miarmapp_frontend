@@ -10,8 +10,7 @@ class PersonRepositoryImpl extends PersonRepository {
 
   @override
   Future<Person> fecthPerson() async {
-    final response = await _client.get(
-        Uri.parse('${Constant.URL_API_BASE}/auth/me'),
+    final response = await _client.get(Uri.parse('${Constant.URL_API_BASE}/me'),
         headers: {'Authorization': 'Bearer ${Constant.TOKEN}'});
 
     if (response.statusCode == 200) {

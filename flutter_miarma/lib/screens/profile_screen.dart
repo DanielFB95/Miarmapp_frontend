@@ -73,7 +73,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   padding: const EdgeInsets.only(top: 35),
                   child: Container(
                     margin: const EdgeInsets.only(top: 20),
-                    height: 50,
+                    width: 500,
+                    height: 75,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -125,14 +126,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: Row(
                     children: [
                       Container(
+                        width: 100,
+                        height: 100,
                         margin: const EdgeInsets.only(top: 15, left: 15),
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(color: Colors.red, width: 2)),
-                        child: MaterialButton(
+                        child: FloatingActionButton(
+                          heroTag: null,
                           elevation: 100,
-                          color: Colors.transparent,
+                          backgroundColor: Colors.transparent,
                           onPressed: () {
                             Navigator.pushNamed(context, "/profile");
                           },
@@ -221,16 +225,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.only(top: 15, left: 10),
                         alignment: Alignment.centerLeft,
-                        child: const Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                            style: TextStyle(fontSize: 12)),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        child: const Text('Lorem ipsum dolor sit amet.',
-                            style: TextStyle(fontSize: 12)),
+                        child: Text(person.biography,
+                            style: const TextStyle(fontSize: 12)),
                       ),
                       Container(
                           width: MediaQuery.of(context).size.width,

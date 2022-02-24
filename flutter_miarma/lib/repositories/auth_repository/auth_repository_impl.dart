@@ -12,7 +12,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginResponse> login(LoginDto loginDto) async {
     final response =
         await _client.post(Uri.parse('${Constant.URL_API_BASE}/auth/login'));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return LoginResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Fail to login');

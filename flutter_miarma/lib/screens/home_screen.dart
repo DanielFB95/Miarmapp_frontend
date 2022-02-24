@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_miarma/blocs/post_bloc/post_bloc.dart';
+import 'package:flutter_miarma/models/post_response.dart';
 import 'package:flutter_miarma/repositories/post_repository/post_repository.dart';
 import 'package:flutter_miarma/repositories/post_repository/post_repository_impl.dart';
 import 'package:flutter_miarma/widgets/error_page.dart';
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return PostBloc(postRepository)..add(FetchPost());
+        return PostBloc(postRepository)..add(const FetchPost());
       },
       child: Scaffold(
         body: _createHomeScreen(context),
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
         } else if (state is PostFetched) {
-          return _homeScreen(context);
+          return _homeScreen(context, state.posts);
         } else {
           return const Text('Not support');
         }
@@ -60,10 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _homeScreen(
-    BuildContext context,
-    /*List<Person> people*/
-  ) {
+  Widget _homeScreen(BuildContext context, List<Post> posts) {
     return Scaffold(
         appBar: const HomeAppBar(),
         body: SingleChildScrollView(
@@ -99,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.vertical,
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return _post();
+                      return _post(posts.elementAt(index));
                     }),
               ),
             ],
@@ -133,17 +132,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          const Text('dfghdf',
-              style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold)),
+          const Padding(
+            padding: EdgeInsets.only(left: 10, top: 5),
+            child: Text('Nombre Usuario',
+                style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold)),
+          ),
         ],
       ),
     );
   }
 
-  Widget _post() {
+  Widget _post(Post post) {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -162,19 +164,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushNamed(context, '/profile');
                     },
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        'assets/images/avatar.jpeg',
-                        width: 40,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          placeholder: (context, url) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          imageUrl: post.userAvatar
+                              .replaceAll('localhost', '10.0.2.2'),
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                        )),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 14, left: 5),
+                Padding(
+                  padding: const EdgeInsets.only(top: 14, left: 5),
                   child: Text(
-                    'Nombre Usuario',
-                    style: TextStyle(
+                    post.userFullName,
+                    style: const TextStyle(
                         color: Colors.black54, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -184,8 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 350,
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(top: 10),
-              child: Image.asset(
-                'assets/images/fondo1.jpg',
+              child: CachedNetworkImage(
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                imageUrl: post.resizedFile.replaceAll('localhost', '10.0.2.2'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -214,8 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottom: BorderSide(color: Colors.black, width: 0.5))),
               margin: const EdgeInsets.only(top: 15, left: 10),
               alignment: Alignment.centerLeft,
-              child: const Text('Comentarios',
-                  style: TextStyle(
+              child: Text(post.message,
+                  style: const TextStyle(
                       color: Colors.black54, fontWeight: FontWeight.bold)),
             )
           ],

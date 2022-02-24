@@ -12,7 +12,7 @@ class PostRepositoryImpl extends PostRepository {
   Future<List<Post>> fetchPeople() async {
     final response = await _client.get(
         Uri.parse('${Constant.URL_API_BASE}/post/public?page=0'),
-        headers: {'Authorization': 'Bearer ${Constant.token}'});
+        headers: {'Authorization': 'Bearer ${Constant.TOKEN}'});
     if (response.statusCode == 200) {
       return PostResponse.fromJson(json.decode(response.body)).content;
     } else {

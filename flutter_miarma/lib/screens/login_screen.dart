@@ -4,6 +4,8 @@ import 'package:flutter_miarma/blocs/login_bloc/login_bloc.dart';
 import 'package:flutter_miarma/models/login_dto.dart';
 import 'package:flutter_miarma/repositories/auth_repository/auth_repository.dart';
 import 'package:flutter_miarma/repositories/auth_repository/auth_repository_impl.dart';
+import 'package:flutter_miarma/screens/menu_screen.dart';
+import 'package:flutter_miarma/utils/preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -43,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
           },
           listener: (context, state) {
             if (state is LoginSuccesState) {
-              Navigator.pushNamed(context, "/");
+              PreferenceUtils.setString("token", state.loginResponse.token);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MenuScreen()));
             }
           },
           buildWhen: (context, state) {
@@ -162,7 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   password: passwordController.text);
                               BlocProvider.of<LoginBloc>(context)
                                   .add(DoLoginEvent(loginDto));
-                              Navigator.pushNamed(context, "/");
                             }
                           },
                           child: Container(

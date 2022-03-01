@@ -20,11 +20,10 @@ class AuthRepositoryImpl extends AuthRepository {
       'Authorization': 'Bearer $token'
     };
 
-    final response =
-        await Future.delayed(const Duration(milliseconds: 4000), () {
-      return _client.post(Uri.parse('${Constant.URL_API_BASE}/auth/login'),
-          headers: headers, body: jsonEncode(loginDto.toJson()));
-    });
+    final response = await _client.post(
+        Uri.parse('${Constant.URL_API_BASE}/auth/login'),
+        headers: headers,
+        body: jsonEncode(loginDto.toJson()));
     if (response.statusCode == 201) {
       return LoginResponse.fromJson(json.decode(response.body));
     } else {

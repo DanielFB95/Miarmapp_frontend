@@ -29,7 +29,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController password2Controller = TextEditingController();
   late SignInBloc _signInBloc;
   late ImagePickBloc _imagePickBloc;
+
   late SignInDto signInDto;
+  late ImageSource source;
 
   List<XFile>? _imageFileList;
 

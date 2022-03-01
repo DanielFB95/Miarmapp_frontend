@@ -41,13 +41,15 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: BlocConsumer<LoginBloc, LoginState>(
           listenWhen: (context, state) {
-            return state is LoginSuccesState || state is LoginErrorState;
+            return state is LoginSuccessState || state is LoginErrorState;
           },
           listener: (context, state) {
-            if (state is LoginSuccesState) {
+            if (state is LoginSuccessState) {
               PreferenceUtils.setString("token", state.loginResponse.token);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MenuScreen()));
+            } else if (state is LoginErrorState) {
+              _showSnackbar(context, state.message);
             }
           },
           buildWhen: (context, state) {
@@ -65,6 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Widget form(BuildContext context) {

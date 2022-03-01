@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     authRepository = AuthRepositoryImpl();
+    PreferenceUtils.init();
   }
 
   @override
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           listener: (context, state) {
             if (state is LoginSuccessState) {
               PreferenceUtils.setString("token", state.loginResponse.token);
+              print(PreferenceUtils.getString("token"));
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MenuScreen()));
             } else if (state is LoginErrorState) {
@@ -188,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Border.all(color: Colors.black, width: 2),
                                   borderRadius: BorderRadius.circular(50)),
                               child: Text(
-                                'Sign In'.toUpperCase(),
+                                'Login'.toUpperCase(),
                                 style: const TextStyle(color: Colors.black),
                                 textAlign: TextAlign.center,
                               )),

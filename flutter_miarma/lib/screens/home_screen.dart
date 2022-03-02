@@ -7,6 +7,7 @@ import 'package:flutter_miarma/repositories/post_repository/post_repository.dart
 import 'package:flutter_miarma/repositories/post_repository/post_repository_impl.dart';
 import 'package:flutter_miarma/widgets/error_page.dart';
 import 'package:flutter_miarma/widgets/home_app_bar.dart';
+import 'dart:convert' show utf8;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -181,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 14, left: 5),
                   child: Text(
-                    post.userFullName,
+                    utf8.decode(post.userFullName.toString().codeUnits),
                     style: const TextStyle(
                         color: Colors.black54, fontWeight: FontWeight.bold),
                   ),
@@ -225,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottom: BorderSide(color: Colors.black, width: 0.5))),
               margin: const EdgeInsets.only(top: 15, left: 10),
               alignment: Alignment.centerLeft,
-              child: Text(post.message,
+              child: Text(utf8.decode(post.message.toString().codeUnits),
                   style: const TextStyle(
                       color: Colors.black54, fontWeight: FontWeight.bold)),
             )

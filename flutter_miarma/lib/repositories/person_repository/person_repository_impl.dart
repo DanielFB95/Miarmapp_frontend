@@ -12,8 +12,14 @@ class PersonRepositoryImpl extends PersonRepository {
   @override
   Future<Person> fecthPerson() async {
     var token = PreferenceUtils.getString("token");
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+
     final response = await _client.get(Uri.parse('${Constant.URL_API_BASE}/me'),
-        headers: {'Authorization': 'Bearer $token'});
+        headers: headers);
 
     if (response.statusCode == 200) {
       return Person.fromJson(json.decode(response.body));

@@ -6,6 +6,7 @@ import 'package:flutter_miarma/models/person_response.dart';
 import 'package:flutter_miarma/repositories/person_repository/person_repository.dart';
 import 'package:flutter_miarma/repositories/person_repository/person_repository_impl.dart';
 import 'package:flutter_miarma/widgets/error_page.dart';
+import 'dart:convert' show utf8;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -97,7 +98,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
-                                person.fullName,
+                                utf8.decode(
+                                    person.fullName.toString().codeUnits),
                                 style: const TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
@@ -213,7 +215,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       height: 15,
                       margin: const EdgeInsets.only(top: 15, left: 10),
                       alignment: Alignment.centerLeft,
-                      child: Text(person.fullName,
+                      child: Text(
+                          utf8.decode(person.fullName.toString().codeUnits),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15)),
                     )),
@@ -225,7 +228,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.only(top: 15, left: 10),
                         alignment: Alignment.centerLeft,
-                        child: Text(person.biography,
+                        child: Text(
+                            utf8.decode(person.biography.toString().codeUnits),
                             style: const TextStyle(fontSize: 12)),
                       ),
                       Container(

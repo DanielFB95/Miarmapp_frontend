@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_miarma/screens/login_screen.dart';
 import 'package:flutter_miarma/screens/menu_screen.dart';
+import 'package:flutter_miarma/screens/new_post_screen.dart';
 import 'package:flutter_miarma/screens/profile_screen.dart';
 import 'package:flutter_miarma/screens/register_screen.dart';
 import 'package:flutter_miarma/screens/search_screen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/profile': (context) => const ProfileScreen(),
-        '/search': (context) => const SearchScreen()
+        '/search': (context) => const SearchScreen(),
+        '/newPost': (context) => const NewPostScreen()
       },
     );
   }

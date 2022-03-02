@@ -28,12 +28,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.add_box_outlined),
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/newPost');
+                        },
+                        child: const Icon(Icons.add_box_outlined)),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Icon(Icons.send),
                   )

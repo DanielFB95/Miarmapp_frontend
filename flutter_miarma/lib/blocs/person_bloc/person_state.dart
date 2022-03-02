@@ -3,6 +3,7 @@ part of 'person_bloc.dart';
 abstract class PersonState extends Equatable {
   const PersonState();
 
+  @override
   List<Object> get props => [];
 }
 
@@ -13,6 +14,7 @@ class PersonFetched extends PersonState {
 
   const PersonFetched(this.person);
 
+  @override
   List<Object> get props => [person];
 }
 
@@ -21,5 +23,6 @@ class PersonFetchError extends PersonState {
 
   const PersonFetchError(this.message);
 
+  @override
   List<Object> get props => [message];
 }

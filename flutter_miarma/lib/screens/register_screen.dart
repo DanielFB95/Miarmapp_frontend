@@ -88,6 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     context.watch<SignUpBloc>().add(DoSignUpEvent(signInDto));
                   });
             } else if (state is SignUpSuccessState) {
+              //vincular los campos del formulario a una nueva variable SignUpDto
               return form(context);
             } else {
               return const Text('Not Support');

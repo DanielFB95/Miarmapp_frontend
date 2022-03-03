@@ -25,3 +25,12 @@ class PostFetchError extends PostState {
   @override
   List<Object> get props => [message];
 }
+
+class NewPostState extends PostState {
+  final CreatePostResponse createPostResponse;
+
+  const NewPostState(this.createPostResponse);
+
+  @override
+  List<Object> get props => [createPostResponse];
+}

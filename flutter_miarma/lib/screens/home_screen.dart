@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Image.asset(
-                  'assets/images/avatar.jpeg',
+                  'assets/images/avatar.png',
                   width: 40,
                 ),
               ),

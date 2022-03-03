@@ -11,7 +11,7 @@ class PostRepositoryImpl extends PostRepository {
   final Client _client = Client();
 
   @override
-  Future<List<Post>> fetchPeople() async {
+  Future<List<Post>> fetchPost() async {
     var token = PreferenceUtils.getString("token");
     final response = await _client.get(
         Uri.parse('${Constant.URL_API_BASE}/post/public?page=0'),

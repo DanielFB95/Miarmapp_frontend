@@ -78,7 +78,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                                 onPressed: () {
                                   //BlocProvider.of<ImagePickBloc>(context).add();
 
-                                  // TODO el evento que debeis crear en el BLoC para
+                                  // el evento que debeis crear en el BLoC para
                                   // poder subir la imagen que tenemos guardada en
                                   // state.pickedFile.path
                                 },

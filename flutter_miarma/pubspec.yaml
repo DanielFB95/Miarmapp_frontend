@@ -72,7 +72,7 @@ flutter:
   assets:
   - assets/images/fondo1.jpg
   - assets/images/logo_miarmapp.png
-  - assets/images/avatar.jpeg
+  - assets/images/avatar.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

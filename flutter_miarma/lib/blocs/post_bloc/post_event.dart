@@ -14,3 +14,10 @@ class FetchPost extends PostEvent {
   @override
   List<Object> get props => [];
 }
+
+class NewPost extends PostEvent {
+  const NewPost();
+
+  @override
+  List<Object> get props => [];
+}

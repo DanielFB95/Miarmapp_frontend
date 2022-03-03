@@ -38,6 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late ImageSource source;
 
   List<XFile>? _imageFileList;
+  var avatarPath;
 
   set _imageFile(XFile? value) {
     _imageFileList = value == null ? null : <XFile>[value];
@@ -106,6 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               );
             } else if (state is ImageSelectedSuccessState) {
+              avatarPath = state.pickedFile.path;
               return Column(
                 children: [
                   Image.file(

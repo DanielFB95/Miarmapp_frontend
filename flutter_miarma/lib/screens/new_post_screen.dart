@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_element
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -74,7 +76,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
-                                  BlocProvider.of<ImagePickBloc>(context).add();
+                                  //BlocProvider.of<ImagePickBloc>(context).add();
 
                                   // TODO el evento que debeis crear en el BLoC para
                                   // poder subir la imagen que tenemos guardada en

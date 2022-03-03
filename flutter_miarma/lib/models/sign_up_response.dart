@@ -1,5 +1,5 @@
-class SignInResponse {
-  SignInResponse({
+class SignUpResponse {
+  SignUpResponse({
     required this.id,
     required this.avatar,
     required this.username,
@@ -20,7 +20,7 @@ class SignInResponse {
   late final String birthdate;
   late final bool private;
 
-  SignInResponse.fromJson(Map<String, dynamic> json) {
+  SignUpResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     avatar = json['avatar'];
     username = json['username'];

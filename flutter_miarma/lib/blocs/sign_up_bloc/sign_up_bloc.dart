@@ -18,7 +18,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   void _doSignUp(DoSignUpEvent event, Emitter<SignUpState> emit) async {
     emit(SignUpLoadingState());
     try {
-      final signInResponse = await authRepository.signUp(event.signUpDto);
+      final signInResponse =
+          await authRepository.signUp(event.signUpDto, event.file);
       emit(SignUpSuccessState(signInResponse));
       return;
     } on Exception catch (e) {

@@ -16,8 +16,11 @@ class FetchPost extends PostEvent {
 }
 
 class NewPost extends PostEvent {
-  const NewPost();
+  final CreatePostDto createPostDto;
+  final String image;
+
+  const NewPost(this.createPostDto, this.image);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [createPostDto, image];
 }

@@ -9,8 +9,9 @@ abstract class SignUpEvent extends Equatable {
 
 class DoSignUpEvent extends SignUpEvent {
   final SignUpDto signUpDto;
+  final String file;
 
-  const DoSignUpEvent(this.signUpDto);
+  const DoSignUpEvent(this.signUpDto, this.file);
 }
 
 class SignUpInitialEvent extends SignUpEvent {

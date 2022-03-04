@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, unused_element
+// ignore_for_file: unused_field, unused_element, prefer_typing_uninitialized_variables
 
 import 'dart:io';
 
@@ -53,6 +53,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
@@ -85,10 +90,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               return ErrorPage(
                   message: state.message,
                   retry: () {
-                    context.watch<SignUpBloc>().add(DoSignUpEvent(signInDto));
+                    context
+                        .watch<SignUpBloc>()
+                        .add(DoSignUpEvent(signInDto, avatarPath));
                   });
             } else if (state is SignUpSuccessState) {
-              //vincular los campos del formulario a una nueva variable SignUpDto
               return form(context);
             } else {
               return const Text('Not Support');
@@ -99,7 +105,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
           bloc: _imagePickBloc,
           builder: (context, state) {
             if (state is ImagePickBlocInitial) {
-              return formImage(context);
+              return Column(
+                children: [
+                  formImage(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 25),
+                    child: Center(
+                      child: SizedBox(
+                          width: 300,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                final signInDto = SignUpDto(
+                                    username: usernameController.text,
+                                    fullname: fullnameController.text,
+                                    email: emailController.text,
+                                    biography: biographyController.text,
+                                    password: passwordController.text,
+                                    password2: password2Controller.text);
+                                BlocProvider.of<SignUpBloc>(context)
+                                    .add(DoSignUpEvent(signInDto, avatarPath));
+                                // Navigator.push(context,MaterialPageRoute(builder: (context) =>const HomeScreen()));
+                              }
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    top: 30, left: 30, right: 30),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black, width: 2),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Text(
+                                  'Sign In'.toUpperCase(),
+                                  style: const TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                )),
+                          )),
+                    ),
+                  ),
+                ],
+              );
             } else if (state is ImageSelectedErrorState) {
               return ErrorPage(
                 message: state.message,
@@ -115,7 +163,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     File(state.pickedFile.path),
                     height: 100,
                   ),
-                  formImage(context)
+                  formImage(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 25),
+                    child: Center(
+                      child: SizedBox(
+                          width: 300,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                final signInDto = SignUpDto(
+                                    username: usernameController.text,
+                                    fullname: fullnameController.text,
+                                    email: emailController.text,
+                                    biography: biographyController.text,
+                                    password: passwordController.text,
+                                    password2: password2Controller.text);
+                                BlocProvider.of<SignUpBloc>(context)
+                                    .add(DoSignUpEvent(signInDto, avatarPath));
+                                // Navigator.push(context,MaterialPageRoute(builder: (context) =>const HomeScreen()));
+                              }
+                            },
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: const EdgeInsets.only(
+                                    top: 30, left: 30, right: 30),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black, width: 2),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Text(
+                                  'Sign In'.toUpperCase(),
+                                  style: const TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                )),
+                          )),
+                    ),
+                  ),
                 ],
               );
             } else {
@@ -296,42 +382,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 36.0),
-              child: Center(
-                child: SizedBox(
-                    width: 300,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          final signInDto = SignUpDto(
-                              username: usernameController.text,
-                              fullname: fullnameController.text,
-                              email: emailController.text,
-                              biography: biographyController.text,
-                              password: passwordController.text,
-                              password2: password2Controller.text);
-                          BlocProvider.of<SignUpBloc>(context)
-                              .add(DoSignUpEvent(signInDto));
-                        }
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(
-                              top: 30, left: 30, right: 30),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 2),
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Text(
-                            'Sign In'.toUpperCase(),
-                            style: const TextStyle(color: Colors.black),
-                            textAlign: TextAlign.center,
-                          )),
-                    )),
               ),
             ),
             Padding(

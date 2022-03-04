@@ -8,7 +8,6 @@ import 'package:flutter_miarma/utils/constants.dart';
 import 'package:flutter_miarma/utils/preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   @override
@@ -33,7 +32,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<SignUpResponse> signUp(SignUpDto signUpDto, [XFile? file]) async {
+  Future<SignUpResponse> signUp(SignUpDto signUpDto, String file) async {
     final url = Uri.parse('${Constant.URL_API_BASE}/auth/register');
 
     var body = json.encode({
@@ -48,8 +47,8 @@ class AuthRepositoryImpl extends AuthRepository {
     final request = http.MultipartRequest('POST', url)
       ..files.add(http.MultipartFile.fromString('body', body,
           contentType: MediaType('application', 'json')))
-      ..files.add(await http.MultipartFile.fromPath('file', file!.path,
-          contentType: MediaType('image', file.mimeType.toString())))
+      ..files.add(await http.MultipartFile.fromPath('file', file,
+          contentType: MediaType('image', 'jpg')))
       ..headers.addAll({"Content-Type": "multipart/form-data"});
 
     var response = await request.send();
@@ -61,18 +60,4 @@ class AuthRepositoryImpl extends AuthRepository {
       throw Exception('No se ha podido realizar el registro.');
     }
   }
-
-  /*
-  @override
-  Future<SignUpResponse> signUp(SignUpDto signUpDto) async {
-    final response = await http.post(
-        Uri.parse('${Constant.URL_API_BASE}/auth/register'),
-        body: jsonEncode(signUpDto.toJson()));
-
-    if (response.statusCode == 200) {
-      return SignUpResponse.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Fail to sign in.');
-    }
-  }*/
 }

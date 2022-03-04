@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_miarma/models/create_post_dto.dart';
 import 'package:flutter_miarma/models/create_post_response.dart';
 import 'package:flutter_miarma/models/post_response.dart';
 import 'package:flutter_miarma/repositories/post_repository/post_repository.dart';
@@ -30,7 +31,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Future<void> _newPost(NewPost event, Emitter<PostState> emit) async {
     try {
-      final newPost = await postRepository.newPost();
+      final newPost =
+          await postRepository.newPost(event.createPostDto, event.image);
       emit(NewPostState(newPost));
       return;
     } on Exception catch (e) {

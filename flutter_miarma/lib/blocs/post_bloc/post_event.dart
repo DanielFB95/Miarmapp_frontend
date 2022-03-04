@@ -15,6 +15,10 @@ class FetchPost extends PostEvent {
   List<Object> get props => [];
 }
 
+class FetchPostError extends PostEvent {
+  const FetchPostError();
+}
+
 class NewPost extends PostEvent {
   final CreatePostDto createPostDto;
   final String image;

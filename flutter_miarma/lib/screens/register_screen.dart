@@ -9,6 +9,7 @@ import 'package:flutter_miarma/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:flutter_miarma/models/sign_up_dto.dart';
 import 'package:flutter_miarma/repositories/auth_repository/auth_repository.dart';
 import 'package:flutter_miarma/repositories/auth_repository/auth_repository_impl.dart';
+import 'package:flutter_miarma/screens/home_screen.dart';
 import 'package:flutter_miarma/widgets/error_page.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -125,7 +126,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     password2: password2Controller.text);
                                 BlocProvider.of<SignUpBloc>(context)
                                     .add(DoSignUpEvent(signInDto, avatarPath));
-                                // Navigator.push(context,MaterialPageRoute(builder: (context) =>const HomeScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()));
                               }
                             },
                             child: Container(
@@ -181,7 +186,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     password2: password2Controller.text);
                                 BlocProvider.of<SignUpBloc>(context)
                                     .add(DoSignUpEvent(signInDto, avatarPath));
-                                // Navigator.push(context,MaterialPageRoute(builder: (context) =>const HomeScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()));
                               }
                             },
                             child: Container(

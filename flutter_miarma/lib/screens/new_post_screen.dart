@@ -116,6 +116,20 @@ class _NewPostScreenState extends State<NewPostScreen> {
               if (state is PostInitial) {
                 return Column(children: [
                   formPost(),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          final createPostDto =
+                              CreatePostDto(message: mensajeController.text);
+                          BlocProvider.of<PostBloc>(context)
+                              .add(NewPost(createPostDto, postImage));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text('Upload Image')),
+                  )
                 ]);
               } else if (state is PostFetchError) {
                 return ErrorPage(
@@ -173,6 +187,187 @@ class _NewPostScreenState extends State<NewPostScreen> {
     );
   }
 }
+
+/*
+
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+  
+    Column(
+      children: [
+        BlocConsumer<ImagePickBloc, ImagePickBlocState>(
+          bloc: _imagePickBloc,
+          listenWhen: (context, state) {
+            return state is ImageSelectedSuccessState ||
+                state is ImageSelectedErrorState;
+          },
+          listener: (context, state) {
+            if (state is ImageSelectedSuccessState) {
+              postImage = state.pickedFile.path;
+            } else if (state is ImageSelectedErrorState) {
+              _showSnackbar(context, state.message);
+            }
+          },
+          buildWhen: (context, state) {
+            return state is ImagePickBlocInitial;
+          },
+          builder: (context, state) {
+            if (state is ImagePickBlocInitial) {
+              return Center(
+                  child: Padding(
+                padding: const EdgeInsets.only(top: 58.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<ImagePickBloc>(context)
+                          .add(const SelectImageEvent(ImageSource.gallery));
+                    },
+                    child: const Text('Select Image')),
+              ));
+            } else if (state is ImageSelectedSuccessState) {
+              postImage = state.pickedFile.path;
+              return Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Image.file(
+                          File(state.pickedFile.path),
+                        ),
+                      ]),
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+        BlocConsumer<PostBloc, PostEvent>(
+          bloc: _postBloc,
+          listenWhen: (context, state) {
+            return state is NewPostState || state is NewPostErrorState;
+          },
+          listener: (context, state) {
+            if (state is NewPostState) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            } else if (state is NewPostErrorState) {
+              _showSnackbar(context, state.message);
+            }
+          },
+          buildWhen: (context, state) {
+            return state is PostInitial;
+          },
+          builder: (context, state) {
+            if (state is PostInitial) {
+              return Container();
+            }
+          },
+        )
+      ],
+    );
+    
+    Column(
+      children: [
+        BlocBuilder<ImagePickBloc, ImagePickBlocState>(
+            bloc: _imagePickBloc,
+            builder: (context, state) {
+              if (state is ImagePickBlocInitial) {
+                return Center(
+                    child: Padding(
+                  padding: const EdgeInsets.only(top: 58.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<ImagePickBloc>(context)
+                            .add(const SelectImageEvent(ImageSource.gallery));
+                      },
+                      child: const Text('Select Image')),
+                ));
+              } else if (state is ImageSelectedErrorState) {
+                return ErrorPage(
+                    message: state.message,
+                    retry: () {
+                      context
+                          .watch<ImagePickBloc>()
+                          .add(SelectImageEvent(source));
+                    });
+              } else if (state is ImageSelectedSuccessState) {
+                postImage = state.pickedFile.path;
+                return Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Image.file(
+                            File(state.pickedFile.path),
+                          ),
+                        ]),
+                  ),
+                );
+              } else {
+                return const Text('Not support');
+              }
+            }),
+        BlocBuilder(
+            bloc: _postBloc,
+            builder: (context, state) {
+              if (state is PostInitial) {
+                return Column(children: [
+                  formPost(),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          final createPostDto =
+                              CreatePostDto(message: mensajeController.text);
+                          BlocProvider.of<PostBloc>(context)
+                              .add(NewPost(createPostDto, postImage));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text('Upload Image')),
+                  )
+                ]);
+              } else if (state is PostFetchError) {
+                return ErrorPage(
+                    message: state.message,
+                    retry: () {
+                      context
+                          .watch<PostBloc>()
+                          .add(NewPost(createPostDto, postImage));
+                    });
+              } else if (state is NewPostState) {
+                return Column(children: [
+                  formPost(),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          final createPostDto =
+                              CreatePostDto(message: mensajeController.text);
+                          BlocProvider.of<PostBloc>(context)
+                              .add(NewPost(createPostDto, postImage));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text('Upload Image')),
+                  )
+                ]);
+              } else {
+                return const Text('Not support');
+              }
+            }),
+      ],
+    );*/
 
 /*
   @override

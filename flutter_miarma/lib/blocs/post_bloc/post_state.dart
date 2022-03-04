@@ -34,3 +34,12 @@ class NewPostState extends PostState {
   @override
   List<Object> get props => [createPostResponse];
 }
+
+class NewPostErrorState extends PostState {
+  final String message;
+
+  const NewPostErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
